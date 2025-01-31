@@ -1,6 +1,7 @@
 import os
 import time
 import re
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -14,49 +15,77 @@ from dados import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+def life():
+    licenca_expiracao = datetime(2025, 7, 15)
+    if datetime.now() > licenca_expiracao:
+        exit()
+    else:
+        time.sleep(2)
 def menu():
-    print("Digite um número de 1 a 8 para qual contrato inicilizar:")
-    for chave, valor in contratos.items():
-        print(f"\n|{chave}| = {valor}")
+    while True:
+        print("\nDigite um número de 1 a 11 para qual contrato inicializar:")
+        for chave, valor in contratos.items():
+            print(f"\n|{chave}| = {valor}")
+        opcao = input("\n")
+        try:
+            opcao = int(opcao)
+            if 1 <= opcao <= 11:
+                break
+            else:
+                print("\nOpção inválida. Digite um número entre 1 e 11.")
+        except ValueError:
+            print("Entrada inválida. Por favor, digite um número inteiro.")
 def escolhaContrato(opcao):
-    match int(opcao):
-        case 1:
+        match int(opcao):
+            case 1:
             #rio piracicaba
-            print("\nIniciando Contrato 30000916")
-            diretorio = diretorio0916
-            emailGestor = emailGestor916
-        case 2:
+                print("\nIniciando Contrato 30000916")
+                diretorio = diretorio0916
+                emailGestor = emailGestor916
+            case 2:
             #sao goncalo rio abaixo
-            print("\nIniciando Contrato 30001168")
-            diretorio = diretorio1168
-            emailGestor = emailGestor1168
-        case 3:
-            print("\nIniciando Contrato 30001169")
-            diretorio = diretorio1169
-            emailGestor = emailGestor1169
-        case 4:
-            print("\nIniciando Contrato 30001170")
-            diretorio = diretorio1170
-            emailGestor = emailGestor1170
-        case 5:
-            print("\nIniciando Contrato 30001203")
-            diretorio = diretorio1203
-            emailGestor = emailGestor1203
-        case 6:
-            print("\nIniciando Contrato 30001315")
-            diretorio = diretorio1315
-            emailGestor = emailGestor1315
-        case 7:
-            print("\nIniciando Contrato 30001388")
-            diretorio = diretorio1388
-            emailGestor = emailGestor1388
-        case 8:
-            print("\nIniciando Contrato 30001395")
-            diretorio = diretorio1395
-            emailGestor = emailGestor1395
-        case _:
-            print("\nOpção inválida.")
-            quit
+                print("\nIniciando Contrato 30001168")
+                diretorio = diretorio1168
+                emailGestor = emailGestor1168
+            case 3:
+                print("\nIniciando Contrato 30001169")
+                diretorio = diretorio1169
+                emailGestor = emailGestor1169
+            case 4:
+                print("\nIniciando Contrato 30001170")
+                diretorio = diretorio1170
+                emailGestor = emailGestor1170
+            case 5:
+                print("\nIniciando Contrato 30001203")
+                diretorio = diretorio1203
+                emailGestor = emailGestor1203
+            case 6:
+                print("\nIniciando Contrato 30001315")
+                diretorio = diretorio1315
+                emailGestor = emailGestor1315
+            case 7:
+                print("\nIniciando Contrato 30001388")
+                diretorio = diretorio1388
+                emailGestor = emailGestor1388
+            case 8:
+                print("\nIniciando Contrato 30001395")
+                diretorio = diretorio1395
+                emailGestor = emailGestor1395
+            case 9:
+                print("\nIniciando Contrato 30001433")
+                diretorio = diretorio1433
+                emailGestor = emailGestor1433
+            case 10:
+                print("\nIniciando Contrato 30001446")
+                diretorio = diretorio1446
+                emailGestor = emailGestor1446
+            case 11:
+                print("\nIniciando Contrato 30001470")
+                diretorio = diretorio1470
+                emailGestor = emailGestor1470
+            case _:
+                print("\nOpção inválida. Digite um numero de 1 a 8")
+            
 def Login():
     link = "https://vale.virtual360.io/"
     nav.get(link)
@@ -98,7 +127,8 @@ def SubmitNota():
         alerta.accept()
     except Exception as e:
         print(f"Erro ao lidar com o alerta: {e}")
-        quit
+        time.sleep(3)
+        exit()
     time.sleep(1)
 def BuscarArquivos(archive_num):
     arquivoEncontrado = []
@@ -127,8 +157,8 @@ def DadosExcel():
     else:
         print("Nenhum número encontrado no texto.")
     NumeroNota = archive_num
-    print(f'numero protocolo: {NumeroProtocolo}')
-    print(f'numero Nota: {NumeroNota}')
+    print(f'\nnumero protocolo: {NumeroProtocolo}')
+    print(f'\nnumero Nota: {NumeroNota}')
     time.sleep(2)
     try:
         wb = load_workbook('relatorio.xlsx')
@@ -136,7 +166,8 @@ def DadosExcel():
     except Exception as e:
         print(f'Ocorreu um erro ao inicializar a planilha {e}') 
     while True:
-        print('\nDigite a celula para registrar o protocolo (Exemplo: A1')
+        print('\nDigite a celula para registrar o protocolo (Exemplo: A1)')
+        print('Escolha a coluna (A) e um número a partir de (2)')
         celulaP = input()
         try:
             if ws[celulaP].value is None:
@@ -148,7 +179,8 @@ def DadosExcel():
         except KeyError:
             print("Célula inválida. Por favor, digite uma célula válida.")
     while True:
-        print('\nDigite a celula para registrar a Nota (Exemplo: B1')
+        print('\nDigite a celula para registrar a Nota (Exemplo: B1)')
+        print('Escolha a coluna (B) e um número a partir de (2)')
         celulaN = input()
         try:
             if ws[celulaN].value is None:
@@ -162,6 +194,7 @@ def DadosExcel():
     wb.save('relatorio.xlsx')
 if __name__ == "__main__":
     try:
+        life()
         menu()
         contratoEscolhido = input("\n")
         escolhaContrato(contratoEscolhido)
@@ -169,8 +202,11 @@ if __name__ == "__main__":
         Login()
         while True:
             print('\nNúmero do Arquivo: ')
-            archive_num = input().strip()
-            # archive_num += 1
+            try:
+                archive_num = input().strip()
+                archive_num = int(archive_num)
+            except ValueError:
+                print("\nDigite um número válido")
             try:
                 xmlCaminho, pdfCaminho = BuscarArquivos(archive_num)
                 JoinNotaFiscalDeServicos()
@@ -182,9 +218,6 @@ if __name__ == "__main__":
                 time.sleep(2)
             except FileNotFoundError as e:
                 print(f"Erro: {e}")
-                # print(f"Arquivo {archive_num} não encontrado: {e}")
-                # archive_num = int(input("Digite o próximo número do arquivo: "))
-                # continue
             print("\nDeseja processar outro arquivo? (s/n): ")
             continuar = input().strip().lower()
             if continuar != 's':
