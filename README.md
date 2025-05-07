@@ -1,7 +1,7 @@
 # ConcrematFVale
 - Minha primeira automação em python para empresa Concremat.
 
-- Automação feita apenas para frota Concremat!
+- Automação feita apenas para o setor Financeiro Concremat!
 
 - Execute o BAT antes de qualquer coisa para verificar se sua maquina contem o python 3.13, logo as bibliotecas #selenium e #openpyxl serão instaladas como dependência.
 
